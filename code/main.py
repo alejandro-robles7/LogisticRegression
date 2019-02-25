@@ -23,3 +23,6 @@ def test_thirdorder_logistic_regression():
 if __name__ == '__main__':
 	test_logistic_regression()
 	test_thirdorder_logistic_regression()
+
+	a = load_data('../data/train.txt')
+	print(a)

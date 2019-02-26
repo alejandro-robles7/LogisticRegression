@@ -9,20 +9,18 @@ test_data, test_label = load_features(testdataloc)
 
 max_iter = 10
 learning_rate = 0.1
-
 data = train_data
 label = train_label
 
 x = data  # predictors
 y = label  # label
 
-x2 = thirdorder(x)
-
-w = logistic_regression(x, y,max_iter, learning_rate)
-w2 = logistic_regression(x2, y,  max_iter, learning_rate)
-
-probability = 1 / (1 + np.exp(-np.dot(x, w)))
-probability.flat[probability > .5] = 1
-probability.flat[probability <= .5] = -1
-accuracy = (probability == y).mean()
-accuracy
+w = np.zeros(np.shape(data)[1])
+n = len(data)
+s = np.dot(w, np.transpose(x))
+exponent = np.dot(np.diag(y), s)
+denominator = 1 / (1 + np.exp(exponent))  # denominator of gradient equation
+YnXn = np.dot(np.diag(y), x)  # numerator of gradient equation
+insum = np.dot(np.diag(denominator), YnXn)
+gt = -(1 / n) * sum(insum)  # gradient
+w -= learning_rate * gt  # Update weights

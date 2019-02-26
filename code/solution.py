@@ -25,11 +25,11 @@ def logistic_regression(data, label, max_iter, learning_rate):
 	y = label
 	n = len(data)
 	for iteration in range(max_iter):
-		s = np.dot(w, np.transpose(x))
-		denominator = 1 / (1 + np.exp(np.dot(np.diag(y), s)))
-		ynxn = np.dot(np.diag(y), x)
-		gt = -(1 / n) * sum(np.dot(np.diag(denominator), ynxn))
-		w -= learning_rate * gt
+		score = np.dot(w, np.transpose(x))
+		denominator = 1 / (1 + np.exp(np.dot(np.diag(y), score)))
+		numerator = np.dot(np.diag(y), x)
+		gradient_descent = -(1 / n) * sum(np.dot(np.diag(denominator), numerator))
+		w -= learning_rate * gradient_descent
 	return w
 
 
@@ -77,5 +77,4 @@ def accuracy(x, y, w):
 	probability = 1 / (1 + np.exp(-np.dot(x, w)))
 	probability.flat[probability > .5] = 1
 	probability.flat[probability <= .5] = -1
-	accuracy = (probability == y).mean()
-	return accuracy
+	return (probability == y).mean()

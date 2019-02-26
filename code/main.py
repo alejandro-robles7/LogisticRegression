@@ -4,10 +4,6 @@ from solution import *
 
 #Use for testing the training and testing processes of a model
 def train_test_a_model(modelname, train_data, train_label, test_data, test_label, max_iter, learning_rate):
-	'''
-	you should try various number of max_iter and learning_rate
-	'''
-
 	if modelname == 'thirdorder':
 		train_data = thirdorder(train_data)
 		test_data = thirdorder(test_data)
